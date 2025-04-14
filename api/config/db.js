@@ -2,10 +2,6 @@ const { Sequelize } = require("sequelize");
 require("dotenv").config();
 
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  timezone: "-03:00", // horário do Ceará
-  dialectOptions: {
-    useUTC: false, // evita gravar em UTC
-  },
   dialect: "postgres",
   protocol: "postgres",
   dialectOptions: {
