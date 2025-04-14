@@ -109,3 +109,18 @@ CREATE TABLE servicos (
   "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+-- Permitir produto_id ser nulo
+ALTER TABLE itens_venda
+ALTER COLUMN produto_id DROP NOT NULL;
+
+-- Adicionar a coluna servico_id
+ALTER TABLE itens_venda
+ADD COLUMN servico_id INT;
+
+-- Criar a foreign key para servicos
+ALTER TABLE itens_venda
+ADD CONSTRAINT fk_servico
+FOREIGN KEY (servico_id) REFERENCES servicos(id);
+

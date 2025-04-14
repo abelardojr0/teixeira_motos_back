@@ -4,9 +4,8 @@ const Produto = require("../models/produtos");
 const Servico = require("../models/servicos");
 const Cliente = require("../models/clientes");
 
-// RELACIONAMENTO para associar Servico a ItemVenda
 ItemVenda.belongsTo(Produto, { foreignKey: "produto_id" });
-ItemVenda.belongsTo(Servico, { foreignKey: "produto_id" }); // mesma coluna para ambos
+ItemVenda.belongsTo(Servico, { foreignKey: "servico_id" });
 ItemVenda.belongsTo(Venda, { foreignKey: "venda_id" });
 Venda.hasMany(ItemVenda, { foreignKey: "venda_id" });
 
@@ -46,7 +45,8 @@ async function criarVenda({ cliente_id, itens }) {
 
     await ItemVenda.create({
       venda_id: venda.id,
-      produto_id: item.item_id, // usado para ambos
+      produto_id: item.type === "Produto" ? item.item_id : null,
+      servico_id: item.type === "Serviço" ? item.item_id : null,
       quantidade: item.quantidade,
       preco_unitario: preco,
       tipo: item.type,
@@ -58,7 +58,6 @@ async function criarVenda({ cliente_id, itens }) {
 
   return venda;
 }
-
 async function listarVendas() {
   return await Venda.findAll({
     include: [

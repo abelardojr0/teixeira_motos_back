@@ -14,9 +14,6 @@ const Cliente = sequelize.define(
     },
     email: {
       type: DataTypes.STRING,
-      validate: {
-        isEmail: true,
-      },
     },
     cpf: {
       type: DataTypes.STRING,
